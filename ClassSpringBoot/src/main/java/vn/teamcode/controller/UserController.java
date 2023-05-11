@@ -14,16 +14,16 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/v1/user")
 public class UserController {
-
+    // Khai bao repository de controller user nay su dung trong viec xu ly database
     @Autowired
     private UserRepository repository;
 
-    @GetMapping("/getAllUser")
+    @GetMapping("/getAllUser") // Khai bao url "/getAllUser" cho nguoi dung su dung API Get ALL User
     List<UserModel> getAllUser() {
         return repository.findAll();
     }
 
-    @GetMapping("/getDetailUser/{userID}")
+    @GetMapping("/getDetailUser/{userID}") // Comment vao day
     ResponseEntity<ResponseObject> getDetailUser(@PathVariable Long userID) {
         Optional<UserModel> foundUser = repository.findById(userID);
         if(foundUser.isPresent()) {
@@ -32,7 +32,7 @@ public class UserController {
             );
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                    new ResponseObject("Failed", "Not found user with id = " + userID, "")
+                    new ResponseObject("Failed", "Not found user with id = " + userID, foundUser)
             );
         }
     }
@@ -83,5 +83,30 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ResponseObject("Success", "Cannot find User to delete", "")
         );
+    }
+
+    @PutMapping("/deleteLocalUser/{userID}")
+    ResponseEntity<ResponseObject> deleteLocalUser(@PathVariable Long userID) {
+        Optional<UserModel> updateUser = repository.findById(userID)
+                .map(
+                        user -> {
+                            user.setShow(true);
+                            return repository.save(user);
+                        }
+                );
+        if(updateUser.isPresent()) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ResponseObject("Success", "Delete local user successfully!", updateUser)
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ResponseObject("Failed", "Not found user with id = " + userID, null)
+            );
+        }
+    }
+
+    @GetMapping("/getAllNotDeleteUser") // Khai bao url "/getAllUser" cho nguoi dung su dung API Get ALL User
+    List<UserModel> getAllNotDeleteUser() {
+        return repository.findByIsShow(false);
     }
 }

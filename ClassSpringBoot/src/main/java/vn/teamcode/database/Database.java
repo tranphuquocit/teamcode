@@ -16,12 +16,12 @@ public class Database {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-//                UserModel user1 = new UserModel("tuandz", "Nguyen van tuan", "Thach that", 2002);
-//                UserModel user2 = new UserModel("minhminh", "Nguyen van minh", "Cau giay", 2002);
-//                UserModel user3 = new UserModel("hoang", "Nguyen van hoang", "Thanh oai", 2003);
-//                logger.info("insert data: " + userRepository.save(user1));
-//                logger.info("insert data: " + userRepository.save(user2));
-//                logger.info("insert data: " + userRepository.save(user3));
+                UserModel user1 = new UserModel("tuandz", "Nguyen van tuan", "Thach that", 2002, false);
+                UserModel user2 = new UserModel("minhminh", "Nguyen van minh", "Cau giay", 2002, true);
+                UserModel user3 = new UserModel("hoang", "Nguyen van hoang", "Thanh oai", 2003, false);
+                logger.info("insert data: " + userRepository.save(user1));
+                logger.info("insert data: " + userRepository.save(user2));
+                logger.info("insert data: " + userRepository.save(user3));
             }
         };
     }

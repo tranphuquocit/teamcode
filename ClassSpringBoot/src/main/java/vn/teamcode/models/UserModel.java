@@ -23,6 +23,7 @@ public class UserModel {
     private String fullName;
     private String address;
     private int year;
+    private boolean isShow;
 
     @Transient
     private int age;
@@ -31,11 +32,12 @@ public class UserModel {
     }
 
     public UserModel() {}
-    public UserModel(String userName, String fullName, String address, int year) {
+    public UserModel(String userName, String fullName, String address, int year, boolean isShow) {
         this.userName = userName;
         this.fullName = fullName;
         this.address = address;
         this.year = year;
+        this.isShow = isShow;
     }
 
     @Override
@@ -87,5 +89,13 @@ public class UserModel {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public boolean isShow() {
+        return isShow;
+    }
+
+    public void setShow(boolean show) {
+        isShow = show;
     }
 }
